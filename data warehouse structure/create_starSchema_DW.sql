@@ -39,7 +39,10 @@ create table fields (
 create table rubberTrees (
     tree_id int PRIMARY key IDENTITY,
     field_id int not null,
-    [location] GEOGRAPHY not null, --latitude and longtitude
+    -- [location] GEOGRAPHY not null, --latitude and longtitude
+    -- instead of 1 geography attribute, we considered to use 2 features latitude and longitude
+    latitude numeric(10, 2) not null,
+    longitude numeric(10, 2) not null,
     topHeight NUMERIC(10, 2) not null, -- from the base to the top of the tree
     crownHeight NUMERIC(10, 2) not null, -- from the base to the crown of the tree
     circumference numeric(10, 2) not null,
@@ -109,13 +112,19 @@ create table Drone(
     direction VARCHAR(200),
     speed NUMERIC(10, 2),
     height NUMERIC(10, 2),
-    currentLocation GEOGRAPHY not null
+    -- currentLocation GEOGRAPHY not null
+    -- considered using latitude, longtitude attributes instead
+    latitude numeric(10, 2) not null,
+    longitude numeric(10, 2) not null,
     FOREIGN key (robot_id) REFERENCES robot(robot_id)
 );
 
 create table chargingStation(
     chargingStation_id int PRIMARY key IDENTITY,
-    [location] GEOGRAPHY not null, -- point, lattitude, longtitude
+    -- [location] GEOGRAPHY not null, -- point, lattitude, longtitude
+    -- considerd using latitude and longtitude attributes instead
+    latitude numeric(10, 2) not null,
+    longitude numeric(10, 2) not null,
     maxNumberOfRobots int not null,
     currentNumerOfRobots int,
     [status] BIT -- check the station is still working or not
@@ -135,7 +144,10 @@ create table droneImages(
     droneImages_id int PRIMARY key IDENTITY,
     drone_id int not null,
     tree_id int not null,
-    [image] varbinary(max), -- "the images is captured. The image data as binary bytes."
+    -- [image] varbinary(max), -- "the images is captured. The image data as binary bytes."
+    -- instead of using varbinary(max) to store image data, we decided to use nvarchar to store the image path, or use nvarchar to store the base64 encoded data of image
+    imagePath NVARCHAR(200),
+    imageBase64 NVARCHAR(max),
     FOREIGN key (drone_id) REFERENCES Drone(drone_id)
 );
 

@@ -10,6 +10,8 @@ connection = pyodbc.connect(driver='{ODBC Driver 17 for SQL Server}', host='HOAI
 # https://www.youtube.com/watch?v=8BiQx_xEIhw&ab_channel=ProgrammingIsFun
 # video: how to connect to SQL Server?
 
-sqlQuery = 'SELECT * from Drone'
+# sqlQuery = 'SELECT * from Drone'
+sqlQuery = 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = "BASE TABLE"'
 df = pd.read_sql(sqlQuery, connection)
+# print(df)
 # print out df to see the result

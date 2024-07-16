@@ -48,13 +48,12 @@ create table rubberTrees (
     circumference numeric(10, 2) not null,
     diameter numeric(10, 2) not null,
     checkDate date, -- the date when data was collected
-    FOREIGN key (field_id) REFERENCES fields(field_id)
 );
 
 create table plans(
     plan_id int PRIMARY key IDENTITY,
     field_id int not null,
-    planTile varchar(100),
+    planTitle varchar(100),
     planDescription VARCHAR(200),
     startDate DATE
 );
@@ -176,24 +175,24 @@ create TABLE SensorControlSystem(
     FOREIGN KEY (radar_id) REFERENCES radar(radar_id)
 );
 
-
-
 create table FACT(
     fact_id int PRIMARY KEY IDENTITY,
     [user_id] int not null,
-    location_id int not null,
+    country_id int not null,
+    region_id int not null,
     plan_id int not null,
     robot_id int not null,
     sensorCtrlSys_id int NOT null,
     tree_id int not null,
+    field_id int not null,
 
     quantity NUMERIC(10, 2) not null, -- the amount of latex obtained from the tree. When a certain amount is reached, an announcement will be made.
 
     FOREIGN KEY ([user_id]) REFERENCES [userInfo]([user_id]),
-    FOREIGN KEY (location_id) REFERENCES region(region_id),
+    FOREIGN KEY (country_id) REFERENCES country(country_id),
+    FOREIGN KEY (region_id) REFERENCES region(region_id),
     FOREIGN key (plan_id) REFERENCES plans(plan_id),
     FOREIGN key (robot_id) REFERENCES robot(robot_id),
     FOREIGN key (sensorCtrlSys_id) REFERENCES SensorControlSystem(sensorCtrlSys_id),
     FOREIGN KEY (tree_id) REFERENCES rubberTrees(tree_id)
-
 )
